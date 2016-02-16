@@ -23,6 +23,8 @@ namespace canoe
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            //Control Creation
+            #region
             //Creates grid with NUM_BUT^2 number of buttons
             for (int i = 0; i < NUM_BUT; i++)
             {
@@ -56,12 +58,15 @@ namespace canoe
                 lbl.AutoSize = true;
                 this.Controls.Add(lbl);
             }
+            //Creates Variable Label
             Label lbl0 = new Label();
             lbl0.Text = "AB\\CD";
             lbl0.Location = new Point(0, 20);
             lbl0.AutoSize = true;
             this.Controls.Add(lbl0);
+            #endregion
         }
+
         void Button_Toggle(object sender, EventArgs e)
         {
             Button button = sender as Button;
@@ -75,9 +80,6 @@ namespace canoe
                 button.Text = "0";
                 button.BackColor = Color.Gainsboro;
             }
-
-
-
             return;
         }
         string decToGray(int num)
