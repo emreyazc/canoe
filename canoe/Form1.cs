@@ -38,11 +38,15 @@ namespace canoe
                 } 
             }
             //Creates labels
-            for (int i = 0; i < 4; i++)
+            for (int k = 0; k < NUM_BUT; k++)
             {
                 Label lbl = new Label();
                 int btnLength = (FORM_SIZE - LABEL_OFFSET * 2) / (NUM_BUT * 2);
-
+                lbl.Text = decToGray(k);
+                Point lblloc = new Point(LABEL_OFFSET + (k * btnLength), 10);
+                lbl.Location = lblloc;
+                MessageBox.Show(lbl.Location.ToString());
+                this.Controls.Add(lbl);
             }
         }
         void Button_Toggle(object sender, EventArgs e)
@@ -57,6 +61,25 @@ namespace canoe
                 button.Text = "0";
             }
             return;
+        }
+        string decToGray(int num)
+        {
+            //Cheat
+            switch (num)
+            {
+                case 0:
+                    return "00";
+                case 1:
+                    return "01";
+                case 2:
+                    return "11";
+                case 3:
+                    return "10";
+                default:
+                    MessageBox.Show("Gray Code Error: Out of Range");
+                    break;
+            }
+            return "00";
         }
     }
 }
