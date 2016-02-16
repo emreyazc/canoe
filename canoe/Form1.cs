@@ -17,7 +17,7 @@ namespace canoe
             InitializeComponent();
         }
 
-        public const int LABEL_OFFSET = 30;
+        public const int LABEL_OFFSET = 50;
         public const int FORM_SIZE = 545;
         public const int NUM_BUT = 4;
 
@@ -44,9 +44,23 @@ namespace canoe
                 int btnLength = (FORM_SIZE - LABEL_OFFSET * 2) / (NUM_BUT * 2);
                 lbl.Text = decToGray(k);
                 lbl.Location = new Point(LABEL_OFFSET + (k * btnLength), 10);
-                MessageBox.Show(lbl.Location.ToString());
+                lbl.AutoSize = true;
                 this.Controls.Add(lbl);
             }
+            for (int k = 0; k < NUM_BUT; k++)
+            {
+                Label lbl = new Label();
+                int btnLength = (FORM_SIZE - LABEL_OFFSET * 2) / (NUM_BUT * 2);
+                lbl.Text = decToGray(k);
+                lbl.Location = new Point(10, LABEL_OFFSET + (k * btnLength));
+                lbl.AutoSize = true;
+                this.Controls.Add(lbl);
+            }
+            Label lbl0 = new Label();
+            lbl0.Text = "AB\\CD";
+            lbl0.Location = new Point(0, 20);
+            lbl0.AutoSize = true;
+            this.Controls.Add(lbl0);
         }
         void Button_Toggle(object sender, EventArgs e)
         {

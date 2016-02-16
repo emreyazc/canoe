@@ -34,7 +34,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(556, 736);
+            this.ClientSize = new System.Drawing.Size(576, 736);
             this.Name = "Form1";
             this.Text = "canoe";
             this.Load += new System.EventHandler(this.Form1_Load);
