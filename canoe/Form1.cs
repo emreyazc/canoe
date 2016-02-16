@@ -64,6 +64,12 @@ namespace canoe
             lbl0.Location = new Point(0, 20);
             lbl0.AutoSize = true;
             this.Controls.Add(lbl0);
+            //Creates Function Label
+            Label lbl1 = new Label();
+            lbl1.Text = "F (A,B,C,D) = ";
+            lbl1.Location = new Point(10, 300);
+            lbl1.AutoSize = true;
+            this.Controls.Add(lbl1);
             #endregion
         }
 
@@ -82,6 +88,7 @@ namespace canoe
             }
             return;
         }
+
         string decToGray(int num)
         {
             //Cheat
