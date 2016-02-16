@@ -43,8 +43,7 @@ namespace canoe
                 Label lbl = new Label();
                 int btnLength = (FORM_SIZE - LABEL_OFFSET * 2) / (NUM_BUT * 2);
                 lbl.Text = decToGray(k);
-                Point lblloc = new Point(LABEL_OFFSET + (k * btnLength), 10);
-                lbl.Location = lblloc;
+                lbl.Location = new Point(LABEL_OFFSET + (k * btnLength), 10);
                 MessageBox.Show(lbl.Location.ToString());
                 this.Controls.Add(lbl);
             }
