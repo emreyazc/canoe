@@ -28,36 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tbSize = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
-            // 
-            // tbSize
-            // 
-            this.tbSize.Location = new System.Drawing.Point(12, 12);
-            this.tbSize.Multiline = true;
-            this.tbSize.Name = "tbSize";
-            this.tbSize.Size = new System.Drawing.Size(100, 29);
-            this.tbSize.TabIndex = 0;
-            this.tbSize.TextChanged += new System.EventHandler(this.tbSize_TextChanged);
-            this.tbSize.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbSize_KeyPress);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(11F, 24F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1056, 576);
-            this.Controls.Add(this.tbSize);
+            this.ClientSize = new System.Drawing.Size(556, 736);
             this.Name = "Form1";
             this.Text = "canoe";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
-
-        private System.Windows.Forms.TextBox tbSize;
     }
 }
 
