@@ -68,11 +68,16 @@ namespace canoe
             if (button.Text == "0")
             {
                 button.Text = "1";
+                button.BackColor = SystemColors.Control;
             }
             else
             {
                 button.Text = "0";
+                button.BackColor = Color.Gainsboro;
             }
+
+
+
             return;
         }
         string decToGray(int num)
