@@ -8,6 +8,13 @@ namespace canoe
 {
     class Function
     {
+        public void TruthTable()
+        {
 
+        }
+        public void KMap()
+        {
+
+        }
     }
 }
