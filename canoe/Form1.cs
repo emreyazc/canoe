@@ -20,6 +20,7 @@ namespace canoe
         public const int LABEL_OFFSET = 50;
         public const int FORM_SIZE = 545;
         public const int NUM_BUT = 4;
+        TextBox tb0 = new TextBox();
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -70,6 +71,14 @@ namespace canoe
             lbl1.Location = new Point(10, 300);
             lbl1.AutoSize = true;
             this.Controls.Add(lbl1);
+            tb0.Location = new Point(100, 300);
+            this.Controls.Add(tb0);
+            Button btn0 = new Button();
+            btn0.Location = new Point(30, 330);
+            btn0.Size = new Size(250, 50);
+            btn0.Text = "Update";
+            this.Controls.Add(btn0);
+            btn0.Click += new EventHandler(Button_Update);
             #endregion
         }
 
@@ -87,6 +96,11 @@ namespace canoe
                 button.BackColor = Color.Gainsboro;
             }
             return;
+        }
+        void Button_Update(object sender, EventArgs e)
+        {
+            string fn = tb0.Text;
+
         }
 
         string decToGray(int num)
