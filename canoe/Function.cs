@@ -14,9 +14,9 @@ namespace canoe
         {
             this.literals = literals;
         }
-        public Array[] Compute()
+        public int[] Compute()
         {
-            int truthtable[fixed 16];
+            int[] truthtable = new int[16];
             int n = 0;
             for (int a = 0; a < 2; a++)
             {
@@ -32,7 +32,9 @@ namespace canoe
                     }
                 }
             }
+            return truthtable;
         }
+
         public void TruthTable()
         {
 
