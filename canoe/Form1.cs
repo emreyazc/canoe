@@ -124,4 +124,11 @@ namespace canoe
         }
         
     }
+    //////Gameplan//////
+    //--Create Function for Boolean Functions (eg: F(a,b,c,d) = abcd)
+    //-Take string literals ie 'abcd' and convert to custom class equation
+    //-Use equation to equate several details of Function class (eg Truth Table (1D Array), K Map (2D Array))
+    //--Use functions to display Truth tables and K Maps of entered functions
+    //--Using minterms and recursive algebra solve K Maps to determine function creating dual input systems.
+
 }
