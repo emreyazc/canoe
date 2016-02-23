@@ -35,9 +35,10 @@ namespace canoe
             return truthtable;
         }
 
-        public void TruthTable()
+        public int[] TruthTable()
         {
-
+            int[] tt = new int[16];
+            tt = Compute();
         }
         public void KMap()
         {
@@ -48,5 +49,7 @@ namespace canoe
             get { return literals; }
             set { literals = value; }
         }
+
+        
     }
 }
