@@ -71,6 +71,47 @@ namespace canoe
                 }
             }
             
+            //Input Buttons
+            for (int i = 0; i < NUM_BUT; ++i)
+            {
+                Button button = new Button();
+                button.Size = new Size(side, side);
+                button.Text = ((char)('A' + i)).ToString();
+                int x = (FORM_SIZE / 2) - (side * 2) + (side * i);
+                button.Location = new Point(x, 300);
+                this.Controls.Add(button);
+            }
+            for (int i = 0; i < 4; ++i)
+            {
+                Button button = new Button();
+                button.Size = new Size(side, side);
+                switch (i)
+                    {
+                    case 0:
+                        button.Text = "+";
+                        break;
+                    case 1:
+                        button.Text = "*";
+                        break;
+                    case 2:
+                        button.Text = "!";
+                        break;
+                    case 3:
+                        button.Text = "<--";
+                        break;
+                }
+                
+                int x = (FORM_SIZE / 2) - (side * 2) + (side * i);
+                button.Location = new Point(x, 350);
+                this.Controls.Add(button);
+            }
+
+            Label lblFunction = new Label();
+            lblFunction.Text = "F(A,B,C,D) = ";
+            lblFunction.Location = new Point(100, 400);
+            lblFunction.AutoSize = true;
+            lblFunction.Visible = true;
+            this.Controls.Add(lblFunction);
 
             #endregion
         }
