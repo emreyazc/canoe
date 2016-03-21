@@ -35,11 +35,11 @@ namespace canoe
             return truthtable;
         }
 
-        public int[] TruthTable()
-        {
-            int[] tt = new int[16];
-            tt = Compute();
-        }
+        //public int[] TruthTable()
+        //{
+         //   int[] tt = new int[16];
+          //  tt = Compute();
+        //}
         public void KMap()
         {
 

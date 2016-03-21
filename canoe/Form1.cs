@@ -18,84 +18,87 @@ namespace canoe
         }
 
         public const int LABEL_OFFSET = 50;
-        public const int FORM_SIZE = 545;
+        public const int FORM_SIZE = 500;
         public const int NUM_BUT = 4;
         TextBox tb0 = new TextBox();
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            //Control Creation
-            #region
-            //Creates grid with NUM_BUT^2 number of buttons
-            for (int i = 0; i < NUM_BUT; i++)
+            #region Control Generation
+
+            int side = 50;
+            //Labels
+            for (int i = 0; i < NUM_BUT; ++i)
             {
-                for (int j = 0; j < NUM_BUT; j++)
+                Label label = new Label();
+                label.Text = Convert.ToString(i, 2).PadLeft(2, '0');
+                int x = (FORM_SIZE / 2) - (side * 2) + (side *decToGray(i)) + 17;
+                label.Location = new Point(x, 10);
+                label.Visible = true;
+                label.AutoSize = true;
+                Controls.Add(label);
+            }
+            for (int i = 0; i < NUM_BUT; ++i)
+            {
+                Label label = new Label();
+                label.Text = Convert.ToString(i, 2).PadLeft(2, '0');
+                int y = (FORM_SIZE / 2) - (side * 2) + (side * decToGray(i)) - side * 2 + 18;
+                label.Location = new Point(100, y);
+                label.Visible = true;
+                label.AutoSize = true;
+                Controls.Add(label);
+            }
+            //K-Table
+            for (int i = 0; i < NUM_BUT; ++i)
+            {
+                for (int j = 0; j < NUM_BUT; ++j)
                 {
-                    Button btn = new Button();
-                    int btnLength = (FORM_SIZE - LABEL_OFFSET * 2) / (NUM_BUT * 2);
-                    btn.Size = new Size(btnLength, btnLength);
-                    btn.Text = "0";
-                    btn.Location = new Point(LABEL_OFFSET + j * btnLength, LABEL_OFFSET + i * btnLength);
-                    this.Controls.Add(btn);
-                    btn.Click += new EventHandler(Button_Toggle);
-                } 
+                    Button button = new Button();
+                    button.Size = new Size(side, side);
+                    int index = i * 4 + j;
+                    button.Text = index.ToString();
+                    button.Name = "button" + index;
+                    int x, y;
+                    x = (FORM_SIZE / 2) - (side * 2) + (side * decToGray(j));
+                    y = (FORM_SIZE / 2) - (side * 2) + (side * decToGray(i)) - side*2;
+                    button.Location = new Point(x, y);
+
+                    button.BackColor = Color.Gainsboro;
+                    this.Controls.Add(button);
+
+                    button.Click += new EventHandler(Button_Toggle);
+
+                }
             }
-            //Creates labels
-            for (int k = 0; k < NUM_BUT; k++)
-            {
-                Label lbl = new Label();
-                int btnLength = (FORM_SIZE - LABEL_OFFSET * 2) / (NUM_BUT * 2);
-                lbl.Text = decToGray(k);
-                lbl.Location = new Point(LABEL_OFFSET + (k * btnLength), 10);
-                lbl.AutoSize = true;
-                this.Controls.Add(lbl);
-            }
-            for (int k = 0; k < NUM_BUT; k++)
-            {
-                Label lbl = new Label();
-                int btnLength = (FORM_SIZE - LABEL_OFFSET * 2) / (NUM_BUT * 2);
-                lbl.Text = decToGray(k);
-                lbl.Location = new Point(10, LABEL_OFFSET + (k * btnLength));
-                lbl.AutoSize = true;
-                this.Controls.Add(lbl);
-            }
-            //Creates Variable Label
-            Label lbl0 = new Label();
-            lbl0.Text = "AB\\CD";
-            lbl0.Location = new Point(0, 20);
-            lbl0.AutoSize = true;
-            this.Controls.Add(lbl0);
-            //Creates Function Label
-            Label lbl1 = new Label();
-            lbl1.Text = "F (A,B,C,D) = ";
-            lbl1.Location = new Point(10, 300);
-            lbl1.AutoSize = true;
-            this.Controls.Add(lbl1);
-            tb0.Location = new Point(100, 300);
-            this.Controls.Add(tb0);
-            Button btn0 = new Button();
-            btn0.Location = new Point(30, 330);
-            btn0.Size = new Size(250, 50);
-            btn0.Text = "Update";
-            this.Controls.Add(btn0);
-            btn0.Click += new EventHandler(Button_Update);
+            
+
             #endregion
         }
-
+        
         void Button_Toggle(object sender, EventArgs e)
         {
             Button button = sender as Button;
-            if (button.Text == "0")
+            /*
+            if (button.Text == "0" || button.BackColor == Color.Gainsboro)
             {
                 button.Text = "1";
+                //button.BackColor = SystemColors.Control;
+            }
+            else
+            {
+                //button.Text = "0";
+                button.BackColor = Color.Gainsboro;
+            }
+            */
+            if (button.BackColor == Color.Gainsboro)
+            {
                 button.BackColor = SystemColors.Control;
             }
             else
             {
-                button.Text = "0";
                 button.BackColor = Color.Gainsboro;
             }
-            return;
+            
         }
         void Button_Update(object sender, EventArgs e)
         {
@@ -103,24 +106,24 @@ namespace canoe
 
         }
 
-        string decToGray(int num)
+        int decToGray(int num)
         {
             //Cheat
             switch (num)
             {
                 case 0:
-                    return "00";
+                    return 0;
                 case 1:
-                    return "01";
+                    return 1;
                 case 2:
-                    return "11";
+                    return 3;
                 case 3:
-                    return "10";
+                    return 2;
                 default:
                     MessageBox.Show("Gray Code Error: Out of Range");
                     break;
             }
-            return "00";
+            return 0;
         }
         
     }
