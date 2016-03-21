@@ -106,6 +106,7 @@ namespace canoe
                 this.Controls.Add(button);
             }
 
+            //Function label
             Label lblFunction = new Label();
             lblFunction.Text = "F(A,B,C,D) = ";
             lblFunction.Location = new Point(100, 400);
@@ -119,18 +120,7 @@ namespace canoe
         void Button_Toggle(object sender, EventArgs e)
         {
             Button button = sender as Button;
-            /*
-            if (button.Text == "0" || button.BackColor == Color.Gainsboro)
-            {
-                button.Text = "1";
-                //button.BackColor = SystemColors.Control;
-            }
-            else
-            {
-                //button.Text = "0";
-                button.BackColor = Color.Gainsboro;
-            }
-            */
+            
             if (button.BackColor == Color.Gainsboro)
             {
                 button.BackColor = SystemColors.Control;
@@ -143,7 +133,6 @@ namespace canoe
         }
         void Button_Update(object sender, EventArgs e)
         {
-            string fn = tb0.Text;
 
         }
 
