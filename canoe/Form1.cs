@@ -21,9 +21,13 @@ namespace canoe
         public const int FORM_SIZE = 500;
         public const int NUM_BUT = 4;
         
+        //Input Label
         Label lblFunction = new Label();
+        Button butUpdate;
 
         string inputFunction = "";
+
+        BooleanFunction b;
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -35,7 +39,7 @@ namespace canoe
             {
                 Label label = new Label();
                 label.Text = Convert.ToString(i, 2).PadLeft(2, '0');
-                int x = (FORM_SIZE / 2) - (side * 2) + (side *decToGray(i)) + 17;
+                int x = (FORM_SIZE / 2) - (side * 2) + (side * BinaryHelper.decToGray(i)) + 17;
                 label.Location = new Point(x, 10);
                 label.Visible = true;
                 label.AutoSize = true;
@@ -45,7 +49,7 @@ namespace canoe
             {
                 Label label = new Label();
                 label.Text = Convert.ToString(i, 2).PadLeft(2, '0');
-                int y = (FORM_SIZE / 2) - (side * 2) + (side * decToGray(i)) - side * 2 + 18;
+                int y = (FORM_SIZE / 2) - (side * 2) + (side * BinaryHelper.decToGray(i)) - side * 2 + 18;
                 label.Location = new Point(100, y);
                 label.Visible = true;
                 label.AutoSize = true;
@@ -62,8 +66,8 @@ namespace canoe
                     button.Text = index.ToString();
                     button.Name = "btn" + index;
                     int x, y;
-                    x = (FORM_SIZE / 2) - (side * 2) + (side * decToGray(j));
-                    y = (FORM_SIZE / 2) - (side * 2) + (side * decToGray(i)) - side*2;
+                    x = (FORM_SIZE / 2) - (side * 2) + (side * BinaryHelper.decToGray(j));
+                    y = (FORM_SIZE / 2) - (side * 2) + (side * BinaryHelper.decToGray(i)) - side*2;
                     button.Location = new Point(x, y);
 
                     button.BackColor = Color.Gainsboro;
@@ -136,6 +140,13 @@ namespace canoe
                 
             }
 
+            butUpdate = new Button();
+            butUpdate.Size = new Size(side, 2 * side);
+            butUpdate.Text = "Update";            
+            butUpdate.Location = new Point(450, 300);
+            this.Controls.Add(butUpdate);
+            butUpdate.Click += new EventHandler(Button_Update);
+
             //Function label
             lblFunction.Text = "F(A,B,C,D) = " + inputFunction;
             lblFunction.Location = new Point(100, 400);
@@ -167,6 +178,15 @@ namespace canoe
             inputFunction += button.Text;
             lblFunction.Text = "F(A,B,C,D) = " + inputFunction;
 
+            if (button.Text == "!" || button.Text == "+" || button.Text == "(")
+            {
+                butUpdate.Enabled = false;                
+            }
+            else
+            {
+                butUpdate.Enabled = true;
+            }
+
         }
 
         void Button_Remove(object sender, EventArgs e)
@@ -185,33 +205,15 @@ namespace canoe
             inputFunction = "";
             lblFunction.Text = "F(A,B,C,D) = " + inputFunction;
 
-        }
+            butUpdate.Enabled = true;
+        }      
 
-
-        int decToGray(int num)
+        void Button_Update(object sender, EventArgs e)
         {
-            //Simple switch to be Gray Code friendly
-            switch (num)
-            {
-                case 0:
-                    return 0;
-                case 1:
-                    return 1;
-                case 2:
-                    return 3;
-                case 3:
-                    return 2;
-                default:
-                    MessageBox.Show("Gray Code Error: Out of Range");
-                    break;
-            }
-            return 0;
-        }
+            Button button = sender as Button;
 
-        bool GetBit(int num, int bitPosition)
-        {
-            bool bit = (num & (1 << bitPosition - 1)) != 0;
-            return bit;
+            b = new BooleanFunction(inputFunction);
+            if (b.checkSubFunctions()) MessageBox.Show("Subfunctions Exists");
         }
         
     }
