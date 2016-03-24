@@ -20,7 +20,10 @@ namespace canoe
         public const int LABEL_OFFSET = 50;
         public const int FORM_SIZE = 500;
         public const int NUM_BUT = 4;
-        TextBox tb0 = new TextBox();
+        
+        Label lblFunction = new Label();
+
+        string inputFunction = "";
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -57,7 +60,7 @@ namespace canoe
                     button.Size = new Size(side, side);
                     int index = i * 4 + j;
                     button.Text = index.ToString();
-                    button.Name = "button" + index;
+                    button.Name = "btn" + index;
                     int x, y;
                     x = (FORM_SIZE / 2) - (side * 2) + (side * decToGray(j));
                     y = (FORM_SIZE / 2) - (side * 2) + (side * decToGray(i)) - side*2;
@@ -80,6 +83,9 @@ namespace canoe
                 int x = (FORM_SIZE / 2) - (side * 2) + (side * i);
                 button.Location = new Point(x, 300);
                 this.Controls.Add(button);
+
+                button.Click += new EventHandler(Button_Input);
+
             }
             for (int i = 0; i < 4; ++i)
             {
@@ -91,24 +97,47 @@ namespace canoe
                         button.Text = "+";
                         break;
                     case 1:
-                        button.Text = "*";
-                        break;
-                    case 2:
                         button.Text = "!";
                         break;
+                    case 2:
+                        button.Text = "(";
+                        break;
                     case 3:
-                        button.Text = "<--";
+                        button.Text = ")";
                         break;
                 }
                 
                 int x = (FORM_SIZE / 2) - (side * 2) + (side * i);
                 button.Location = new Point(x, 350);
                 this.Controls.Add(button);
+
+                button.Click += new EventHandler(Button_Input);
+            }
+
+            for (int i = 0; i < 2; ++i)
+            {
+                Button button = new Button();
+                button.Size = new Size(side, side);
+                switch (i)
+                {
+                    case 0:
+                        button.Text = "<--";
+                        button.Click += new EventHandler(Button_Remove);
+                        break;
+                    case 1:
+                        button.Text = "clear";
+                        button.Click += new EventHandler(Button_Clear);
+                        break;
+                }
+
+                int y = (FORM_SIZE / 2) + (side * 1) + (side * i);
+                button.Location = new Point(400, y);
+                this.Controls.Add(button);
+                
             }
 
             //Function label
-            Label lblFunction = new Label();
-            lblFunction.Text = "F(A,B,C,D) = ";
+            lblFunction.Text = "F(A,B,C,D) = " + inputFunction;
             lblFunction.Location = new Point(100, 400);
             lblFunction.AutoSize = true;
             lblFunction.Visible = true;
@@ -128,17 +157,40 @@ namespace canoe
             else
             {
                 button.BackColor = Color.Gainsboro;
-            }
-            
+            }            
         }
-        void Button_Update(object sender, EventArgs e)
+
+        void Button_Input(object sender, EventArgs e)
         {
+            Button button = sender as Button;
+
+            inputFunction += button.Text;
+            lblFunction.Text = "F(A,B,C,D) = " + inputFunction;
 
         }
+
+        void Button_Remove(object sender, EventArgs e)
+        {
+            Button button = sender as Button;
+            if (inputFunction.Length != 0)
+                inputFunction = inputFunction.Remove(inputFunction.Length - 1);
+            lblFunction.Text = "F(A,B,C,D) = " + inputFunction;
+
+        }
+
+        void Button_Clear(object sender, EventArgs e)
+        {
+            Button button = sender as Button;
+
+            inputFunction = "";
+            lblFunction.Text = "F(A,B,C,D) = " + inputFunction;
+
+        }
+
 
         int decToGray(int num)
         {
-            //Cheat
+            //Simple switch to be Gray Code friendly
             switch (num)
             {
                 case 0:
@@ -154,6 +206,12 @@ namespace canoe
                     break;
             }
             return 0;
+        }
+
+        bool GetBit(int num, int bitPosition)
+        {
+            bool bit = (num & (1 << bitPosition - 1)) != 0;
+            return bit;
         }
         
     }
