@@ -85,10 +85,26 @@ namespace canoe
             {
                 Console.WriteLine("STARTING LOOP with a count of " + inputQueue.Count);
                 string s = inputQueue.Dequeue();
-                if (isANumber(s))
+                if (isANumber(s) || isInverted(s))
                 {
-                                        
-                    outputStack.Push(s);
+                    string output;
+                    if (isInverted(s))
+                    {
+                        if (s[1] == '0')
+                        {
+                            output = "1";
+                        }
+                        else
+                        {
+                            output = "0";
+                        }
+                    }
+                    else
+                    {
+                        output = s;
+                    }
+
+                    outputStack.Push(output);
 
                     Console.WriteLine("ITS A NUMBER!");
                     Console.WriteLine("OUTPUT STACK: ");
@@ -213,6 +229,15 @@ namespace canoe
                  return true;
             }
             
+            return false;
+        }
+
+        private bool isInverted(string n)
+        {
+            if (n[0] == '!')
+            {
+                return true;
+            }
             return false;
         }
 
