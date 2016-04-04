@@ -20,12 +20,17 @@ namespace canoe
         public const int LABEL_OFFSET = 50;
         public const int FORM_SIZE = 500;
         public const int NUM_BUT = 4;
-        
+
+        Button[] btns = new Button[16];
+        bool[] bools = new bool[16];
         //Input Label
         Label lblFunction = new Label();
         Button butUpdate;
-
-        string inputFunction = "";
+        TextBox tbFunction = new TextBox();
+        
+        string inputFunction;
+        Queue<string> RPN = new Queue<string>();
+        Queue<string> RPNwithvalues = new Queue<string>();
 
         BooleanFunction b;
 
@@ -56,6 +61,7 @@ namespace canoe
                 Controls.Add(label);
             }
             //K-Table
+
             for (int i = 0; i < NUM_BUT; ++i)
             {
                 for (int j = 0; j < NUM_BUT; ++j)
@@ -75,71 +81,12 @@ namespace canoe
 
                     button.Click += new EventHandler(Button_Toggle);
 
+                    btns[index] = button;
                 }
             }
             
             //Input Buttons
-            for (int i = 0; i < NUM_BUT; ++i)
-            {
-                Button button = new Button();
-                button.Size = new Size(side, side);
-                button.Text = ((char)('A' + i)).ToString();
-                int x = (FORM_SIZE / 2) - (side * 2) + (side * i);
-                button.Location = new Point(x, 300);
-                this.Controls.Add(button);
-
-                button.Click += new EventHandler(Button_Input);
-
-            }
-            for (int i = 0; i < 4; ++i)
-            {
-                Button button = new Button();
-                button.Size = new Size(side, side);
-                switch (i)
-                    {
-                    case 0:
-                        button.Text = "+";
-                        break;
-                    case 1:
-                        button.Text = "!";
-                        break;
-                    case 2:
-                        button.Text = "(";
-                        break;
-                    case 3:
-                        button.Text = ")";
-                        break;
-                }
-                
-                int x = (FORM_SIZE / 2) - (side * 2) + (side * i);
-                button.Location = new Point(x, 350);
-                this.Controls.Add(button);
-
-                button.Click += new EventHandler(Button_Input);
-            }
-
-            for (int i = 0; i < 2; ++i)
-            {
-                Button button = new Button();
-                button.Size = new Size(side, side);
-                switch (i)
-                {
-                    case 0:
-                        button.Text = "<--";
-                        button.Click += new EventHandler(Button_Remove);
-                        break;
-                    case 1:
-                        button.Text = "clear";
-                        button.Click += new EventHandler(Button_Clear);
-                        break;
-                }
-
-                int y = (FORM_SIZE / 2) + (side * 1) + (side * i);
-                button.Location = new Point(400, y);
-                this.Controls.Add(button);
-                
-            }
-
+           
             butUpdate = new Button();
             butUpdate.Size = new Size(side, 2 * side);
             butUpdate.Text = "Update";            
@@ -147,13 +94,16 @@ namespace canoe
             this.Controls.Add(butUpdate);
             butUpdate.Click += new EventHandler(Button_Update);
 
+            
             //Function label
             lblFunction.Text = "F(A,B,C,D) = " + inputFunction;
-            lblFunction.Location = new Point(100, 400);
+            lblFunction.Location = new Point(100, 350);
             lblFunction.AutoSize = true;
             lblFunction.Visible = true;
             this.Controls.Add(lblFunction);
 
+            tbFunction.Location = new Point(100, 375);
+            this.Controls.Add(tbFunction);
             #endregion
         }
         
@@ -171,57 +121,48 @@ namespace canoe
             }            
         }
 
-        void Button_Input(object sender, EventArgs e)
-        {
-            Button button = sender as Button;
-
-            inputFunction += button.Text;
-            lblFunction.Text = "F(A,B,C,D) = " + inputFunction;
-
-            if (button.Text == "!" || button.Text == "+" || button.Text == "(")
-            {
-                butUpdate.Enabled = false;                
-            }
-            else
-            {
-                butUpdate.Enabled = true;
-            }
-
-        }
-
-        void Button_Remove(object sender, EventArgs e)
-        {
-            Button button = sender as Button;
-            if (inputFunction.Length != 0)
-                inputFunction = inputFunction.Remove(inputFunction.Length - 1);
-            lblFunction.Text = "F(A,B,C,D) = " + inputFunction;
-
-        }
-
-        void Button_Clear(object sender, EventArgs e)
-        {
-            Button button = sender as Button;
-
-            inputFunction = "";
-            lblFunction.Text = "F(A,B,C,D) = " + inputFunction;
-
-            butUpdate.Enabled = true;
-        }      
-
         void Button_Update(object sender, EventArgs e)
         {
             Button button = sender as Button;
 
-            b = new BooleanFunction(inputFunction);
-            if (b.checkSubFunctions()) MessageBox.Show("Subfunctions Exists");
-        }
-        
-    }
-    //////Gameplan//////
-    //--Create Function for Boolean Functions (eg: F(a,b,c,d) = abcd)
-    //-Take string literals ie 'abcd' and convert to custom class equation
-    //-Use equation to equate several details of Function class (eg Truth Table (1D Array), K Map (2D Array))
-    //--Use functions to display Truth tables and K Maps of entered functions
-    //--Using minterms and recursive algebra solve K Maps to determine function creating dual input systems.
+            inputFunction = tbFunction.Text;
+            string[] tokens = inputFunction.Split(null);
+            lblFunction.Text = "F(A,B,C,D) = " + inputFunction;
 
-}
+            b = new BooleanFunction(tokens);
+            RPN = b.getRPN();
+            bools = b.getTruthTable(RPN);
+            string output = "";
+            foreach (string value in RPN)
+            {
+                output += value + " ";
+            }            
+            lblFunction.Text = "F(A,B,C,D) = " + output;
+            int i = 0;
+            foreach(bool value in bools)
+            {
+                Console.WriteLine(value + " " + Convert.ToString(i, 2).PadLeft(4, '0'));
+                i++;
+            }
+            setButton();
+        }
+
+        void setButton()
+        {
+            for (int i = 0; i < 16; i++)
+            {
+                if (bools[i] == false)
+                {
+                    btns[i].BackColor = Color.Gainsboro;
+                }
+                else
+                {
+                    btns[i].BackColor = SystemColors.Control;
+                }
+
+            }
+        }
+
+               
+    }
+ }

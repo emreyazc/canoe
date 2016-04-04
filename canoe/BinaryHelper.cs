@@ -26,9 +26,9 @@ namespace canoe
             }
         }
 
-        public static bool GetBit(int num, int bitPosition)
+        public static int getBit(int num, int bitPosition)
         {
-            bool bit = (num & (1 << bitPosition - 1)) != 0;
+            int bit = (num & (1 << bitPosition - 1));
             return bit;
         }
     }
